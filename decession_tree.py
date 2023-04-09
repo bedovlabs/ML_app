@@ -4,14 +4,14 @@ import matplotlib.pyplot as plt
 from regex import X
 from sklearn.datasets import load_iris
 from sklearn.tree import DecisionTreeClassifier, plot_tree
-from dtreeviz.trees import *
 import streamlit as st
 from Page_layout import main_page
 import seaborn as sns
 from sklearn.metrics import accuracy_score,confusion_matrix
 from sklearn.model_selection import train_test_split
 import graphviz
-
+import matplotlib.pyplot as plt
+from sklearn import tree
 
 class Supervised_decession_tree(object):
     
@@ -22,28 +22,55 @@ class Supervised_decession_tree(object):
         How_it_work,Try_algorithm=st.tabs(("How the algorithm work","Try Algorithm"))         
         with Try_algorithm:
             Try_col1,Try_col2=Try_algorithm.columns((5,5))
-            self.criterion=Try_col1.selectbox("Criterion",options=['gini', 'entropy', 'log_loss'])
+            self.criterion=Try_col1.selectbox("Criterion",options=['gini', 'entropy'])
             self.max_depth=Try_col1.slider("Max Depth",1,10,1)
             
             Go_model_BTN=Try_col1.button("Go")
-            self.max_features=Try_col2.selectbox("Max Features",options=['None', 'auto', 'sqrt', 'log2'])
+            self.max_features=Try_col2.selectbox("Max Features",options=[ 'auto', 'sqrt', 'log2'])
             self.min_samples_split=Try_col2.slider("Minimum Samples Split",2,10,1)
             
             Generate_dataBTN =Try_col2.button("Generate New Data")
 
         
             if Go_model_BTN:
-                df=load_iris()
-                fig1,fig2=self.load_data_and_visualize(df)
-                Try_algorithm.pyplot(fig1)
-                Try_algorithm.plotly_chart(fig2,use_container_width=True)    
-              
+          
+                X, y = load_iris(return_X_y=True)
+
+                # Make an instance of the Model
+                clf = DecisionTreeClassifier(max_depth = self.max_depth,min_samples_split= self.min_samples_split,criterion=self.criterion,max_features=self.max_features,)
+
+                # Train the model on the data
+                clf.fit(X, y)
+
+                fn=['sepal length (cm)','sepal width (cm)','petal length (cm)','petal width (cm)']
+                cn=['setosa', 'versicolor', 'virginica']
+
+                # Setting dpi = 300 to make image clearer than default
+                fig, axes = plt.subplots(nrows = 1,ncols = 1,figsize = (4,4), dpi=300)
+
+                tree.plot_tree(clf, feature_names = fn, class_names=cn,filled = True)
+                
+                Try_algorithm.pyplot(fig)             
             
             if Generate_dataBTN:
                 df=main_page.gen_new_data()
-                fig1,fig2=self.load_data_and_visualize(df)
-                Try_algorithm.pyplot(fig1)
-                Try_algorithm.plotly_chart(fig2,use_container_width=True)    
+                X = df.iloc[:,:-1]
+                y= df.iloc[:,-1]
+                clf = DecisionTreeClassifier(max_depth = self.max_depth,min_samples_split= self.min_samples_split,criterion=self.criterion,max_features=self.max_features,)
+
+                # Train the model on the data
+                clf.fit(X, y)
+
+                fn=['Feature1','Feature2']
+                cn=['No','Yes']
+
+                # Setting dpi = 300 to make image clearer than default
+                fig, axes = plt.subplots(nrows = 1,ncols = 1,figsize = (4,4), dpi=300)
+
+                tree.plot_tree(clf, feature_names = fn, class_names=cn,filled = True)
+                
+                Try_algorithm.pyplot(fig)             
+               
                 
                 
         with How_it_work:
@@ -384,6 +411,21 @@ class Supervised_decession_tree(object):
 
 
 
+    
+    def user_input_features_iris(self,colname1,colname2):
+        main_page.alignh(3,colname1)
+        colname1.header("Prediction of flower type")
+        sepal_length = colname1.slider('Sepal length', 4.3, 7.9, 5.4)
+        sepal_width = colname1.slider('Sepal width', 2.0, 4.4, 3.4)
+        petal_length = colname1.slider('Petal length', 1.0, 6.9, 1.3)
+        petal_width = colname1.slider('Petal width', 0.1, 2.5, 0.2)
+        data = {'sepal_length': sepal_length,
+            'sepal_width': sepal_width,
+            'petal_length': petal_length,
+            'petal_width': petal_width}
+        features = pd.DataFrame(data, index=[0])
+        return features
+"""    
     def load_data_and_visualize(self,df):   
         data = df
         if isinstance(data, pd.DataFrame):
@@ -460,17 +502,4 @@ class Supervised_decession_tree(object):
         ))
        # fig2.show()
         return fig1,fig2
-
-    def user_input_features_iris(self,colname1,colname2):
-        main_page.alignh(3,colname1)
-        colname1.header("Prediction of flower type")
-        sepal_length = colname1.slider('Sepal length', 4.3, 7.9, 5.4)
-        sepal_width = colname1.slider('Sepal width', 2.0, 4.4, 3.4)
-        petal_length = colname1.slider('Petal length', 1.0, 6.9, 1.3)
-        petal_width = colname1.slider('Petal width', 0.1, 2.5, 0.2)
-        data = {'sepal_length': sepal_length,
-            'sepal_width': sepal_width,
-            'petal_length': petal_length,
-            'petal_width': petal_width}
-        features = pd.DataFrame(data, index=[0])
-        return features
+"""
