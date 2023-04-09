@@ -9,7 +9,7 @@ import tensorflow as tf
 
 class svm_image(object):
     def load_data(self):
-        Categories=['Cats','Dogs']
+        Categories=['cats','dogs']
         flat_data_arr=[] #input array
         target_arr=[] #output array
         targets=[]
