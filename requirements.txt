@@ -17,10 +17,3 @@ celluloid==0.2.0
 dtreeviz==2.2.0
 opencv-python-headless==4.5.3.56
 streamlit_drawable_canvas==0.9.2
-flatbuffers==23.3.3
-termcolor==2.2.0
-astunparse==1.6.3
-gast==0.5.3
-opt-einsum==3.3.0
-wrapt==1.15.0
-absl-py==1.4.0
