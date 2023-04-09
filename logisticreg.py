@@ -36,8 +36,8 @@ class supervised_logistic(object):
 
             #alignh(1,col2)
             #col2.markdown("#####")
-            self.No_of_iteration_parameter=Try_col2.slider("Iterations",1,150,1)
-            self.Frame_interval_parameter=Try_col2.slider("Interval",100,500,100)
+            self.No_of_iteration_parameter=Try_col2.slider("Iterations",min_value=5,max_value= 150,step=1)
+            self.Frame_interval_parameter=Try_col2.slider("Interval",min_value= 100,max_value= 500,step= 100)
             Generate_dataBTN =Try_col2.button("Generate New Data")
 
         
