@@ -27,7 +27,7 @@ class Supervised_decession_tree(object):
             
             Go_model_BTN=Try_col1.button("Go")
             self.max_features=Try_col2.selectbox("Max Features",options=[ 'auto', 'sqrt', 'log2'])
-            self.min_samples_split=Try_col2.slider("Minimum Samples Split",2,10,1)
+            self.min_samples_split=Try_col2.slider("Minimum Samples Split",min_value=2,max_value= 10,step= 1)
             
             Generate_dataBTN =Try_col2.button("Generate New Data")
 
