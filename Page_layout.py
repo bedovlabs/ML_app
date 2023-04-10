@@ -13,7 +13,7 @@ class main_page(object):
         st.title('Bedo AI Virtual labs')
         #sidebar Content
         st.sidebar.image('media/bedo2.png',width=50)
-        self.supervised_Regression_algorithms=['Linear Regression','K Nearset Neighpors KNN','Random Forest','Support Vector Machine','Decession Tree']
+        self.supervised_Regression_algorithms=['Linear Regression','Lasso Regression','Gradient Boasting Regression']
         self.supervised_classification=['Logistic Regression','K Nearset Neighpors KNN','Support Vector Machine','Decession Tree','Naive Bayes']
         self.unsupervised_classification=['K Means','K Nearset Neighpors KNN']
         self.all_algo=['Logistic Regression','K Nearset Neighpors KNN','K Means','Support Vector Machine','Decession Tree','Naive Bayes','Linear Regression']
@@ -21,7 +21,7 @@ class main_page(object):
         if self.learntype=='Tutorials':
             self.algorithm=st.sidebar.selectbox("Agorithm ",options=self.all_algo)
         elif self.learntype=='Algorithm in Action':
-            self.Algotypes=st.sidebar.selectbox("Agorithm Type",options=['Classification'])
+            self.Algotypes=st.sidebar.selectbox("Agorithm Type",options=['Classification','Regression'])
             if self.Algotypes=="Regression":
                self.algorithm=st.sidebar.radio('Algorithm',options=self.supervised_Regression_algorithms )
             elif self.Algotypes=="Classification":

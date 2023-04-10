@@ -42,8 +42,8 @@ if main_page.learntype=='Tutorials':
             unsupervised_kmeans.kmeans_tut()
 
     elif main_page.algorithm=='Linear Regression':
-            from regression import linear_reg
-            linear_reg.linear_reg_tut()
+            from regression import regression_algorithms
+            regression_algorithms.linear_reg_tut()
             
 
       
@@ -64,10 +64,19 @@ elif main_page.learntype=='Algorithm in Action':
     elif  main_page.algorithm=='K Nearset Neighpors KNN':
             supervised_knn=Supervised_knn()
             supervised_knn.knn_inaction()
-    elif main_page.algorithm=='K Means':
-            un_kmeans=kmeans()
-            un_kmeans.kmeantu    
-
+   # elif main_page.algorithm=='K Means':
+         #   un_kmeans=kmeans()
+          #  un_kmeans.kmeantu    
+    elif main_page.algorithm=='Linear Regression':
+           from regression import regression_algorithms
+           regression_algorithms.linearinaction()
+    elif main_page.algorithm=='Lasso Regression':
+           from regression import regression_algorithms
+           regression_algorithms.Lassoinaction()
+    elif main_page.algorithm=='Gradient Boasting Regression':
+           from regression import regression_algorithms
+           regression_algorithms.Gradientinaction()    
+    
 elif  main_page.learntype=='Benchmark Algorithms':
             #st.header(main_page.algorithm )
             from benchmark import benchmark_classifiers
