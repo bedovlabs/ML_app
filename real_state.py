@@ -9,13 +9,15 @@ from sklearn.linear_model import Lasso
 from sklearn.model_selection import train_test_split
 from sklearn.ensemble import GradientBoostingRegressor
 from sklearn.metrics import mean_squared_error, r2_score
-
+import pickle
+import streamlit as st
 
 class realstate_prediction(object):
     # First, let's load the data
 
     def  realstate_load_explore_split_data():
         df_RPP = pd.read_csv('data/Real_estate.csv')
+       
         df_RPP_Original=df_RPP.copy(deep=True)
         df_RPP.drop('No',inplace=True,axis=1)
         df_RPP.columns = ['transaction date', 'house age', 'distance to the nearest MRT station', 'number of convenience stores', 'latitude', 'longitude', 'house price of unit area']
@@ -24,8 +26,9 @@ class realstate_prediction(object):
         label_updated=df_RPP[df_RPP.columns[-1]]
 
         df_RPP.drop('transaction date',inplace=True,axis=1)
-        X, y = df_RPP[df_RPP.columns[1:-1]].values, df_RPP[df_RPP.columns[-1]].values
+        X, y = df_RPP[df_RPP.columns[0:-1]].values, df_RPP[df_RPP.columns[-1]].values
         X_train, X_test, y_train, y_test = train_test_split(X, y,test_size=0.2)
+        
         return df_RPP, X_train, X_test, y_train, y_test 
 
         #30% test data and 70% train data
@@ -38,6 +41,8 @@ class realstate_prediction(object):
         mse_LR = mean_squared_error(y_test, predictions_LR)
         rmse_LR = np.sqrt(mse_LR)
         r2_LR = r2_score(y_test, predictions_LR)
+        filename = 'savedmodels/realstate_linear_reg_model.sav'
+        pickle.dump(model_LR, open(filename, 'wb'))
         return mse_LR,rmse_LR,r2_LR
 
 
@@ -53,6 +58,9 @@ class realstate_prediction(object):
         mse_LASSO = mean_squared_error(y_test, predictions_LASSO)
         rmse_LASSO = np.sqrt(mse_LASSO)
         r2_LASSO = r2_score(y_test, predictions_LASSO)
+        filename = 'savedmodels/realstate_lasso_reg_model.sav'
+        pickle.dump(model_LASSO, open(filename, 'wb'))
+
         return mse_LASSO,rmse_LASSO,r2_LASSO
 
     def realstate_gradient_bossting(X_train,X_test,y_train,y_test):
@@ -66,8 +74,23 @@ class realstate_prediction(object):
         mse_GBR = mean_squared_error(y_test, predictions_GBR)
         rmse_GBR = np.sqrt(mse_GBR)
         r2_GBR = r2_score(y_test, predictions_GBR)
+        filename = 'savedmodels/realstate_gradient_bossting_model.sav'
+        pickle.dump(model_GBR, open(filename, 'wb'))
         return mse_GBR,rmse_GBR,r2_GBR
-       
+    
+    def user_input_feature_realstate(real_col1,real_col2):
+        #[ 'house age', 'distance to the nearest MRT station', 'number of convenience stores', 'latitude', 'longitude',]
+        house_age = real_col1.slider('House Age', 0.0, 50.0 , step=0.1)
+        distance_to_MRT = real_col1.slider('distance to the nearest MRT', 120, 990, 1)
+        number_convenience_stores = real_col1.slider('number of convenience stores',10,263, 1)
+        latitude = real_col2.slider('latitude', 20.0000, 30.0000, step=0.0001)
+        longitude=real_col2.slider('longitude',121.47353, 121.56627, step=0.0001)
+        data = {'house age': house_age,'distance to the nearest MRT': distance_to_MRT,
+            'number of convenience stores': number_convenience_stores,'latitude': latitude,
+            'longitude': longitude, }
+        features = pd.DataFrame(data, index=[0])
+        return features
+
 
    
 

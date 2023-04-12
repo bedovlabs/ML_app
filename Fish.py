@@ -9,6 +9,7 @@ from sklearn.linear_model import Lasso
 from sklearn.model_selection import train_test_split
 from sklearn.ensemble import GradientBoostingRegressor
 from sklearn.metrics import mean_squared_error, r2_score
+import pickle
 
 
 class fish_weight_prediction(object):
@@ -27,7 +28,7 @@ class fish_weight_prediction(object):
         X, y = df_fishw[df_fishw.columns[1:-1]].values, df_fishw[df_fishw.columns[-1]].values
         X_train, X_test, y_train, y_test = train_test_split(X, y,test_size=0.2)
         return df_fishw, X_train, X_test, y_train, y_test 
-
+#*******************************************************************************
         #30% test data and 70% train data
     def  fish_weight_linear_reg(X_train,X_test,y_train,y_test):
    
@@ -38,11 +39,14 @@ class fish_weight_prediction(object):
         mse_LR = mean_squared_error(y_test, predictions_LR)
         rmse_LR = np.sqrt(mse_LR)
         r2_LR = r2_score(y_test, predictions_LR)
+        filename = 'savedmodels/fish_weight_linear_reg_model.sav'
+        pickle.dump(model_LR, open(filename, 'wb'))
         return mse_LR,rmse_LR,r2_LR
 
 
     #Lasso model: LASSO is good at generalization(L1) of features where it sets some of the least correlation 
     #features to value near to zero, which enables the model to depend more on other features.
+    #****************************************************************************************
     def fish_weight_lasso_reg(X_train,X_test,y_train,y_test):
 
         pipe_LASSO = Pipeline(steps=[('scaler', StandardScaler()),   ('estimator', Lasso())  ])
@@ -53,8 +57,10 @@ class fish_weight_prediction(object):
         mse_LASSO = mean_squared_error(y_test, predictions_LASSO)
         rmse_LASSO = np.sqrt(mse_LASSO)
         r2_LASSO = r2_score(y_test, predictions_LASSO)
+        filename = 'savedmodels/fish_weight_lasso_reg_model.sav'
+        pickle.dump(model_LASSO, open(filename, 'wb'))
         return mse_LASSO,rmse_LASSO,r2_LASSO
-
+#***************************************************************************
     def fish_weight_gradient_bossting(X_train,X_test,y_train,y_test):
 
         # define the pipeline
@@ -66,6 +72,8 @@ class fish_weight_prediction(object):
         mse_GBR = mean_squared_error(y_test, predictions_GBR)
         rmse_GBR = np.sqrt(mse_GBR)
         r2_GBR = r2_score(y_test, predictions_GBR)
+        filename = 'savedmodels/fish_weight_gradient_bossting_model.sav'
+        pickle.dump(model_GBR, open(filename, 'wb'))
         return mse_GBR,rmse_GBR,r2_GBR
        
 

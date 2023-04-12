@@ -10,6 +10,7 @@ import streamlit.components.v1 as components
 import seaborn as sns
 from Page_layout import main_page
 import pandas as pd
+import pickle
 class regression_algorithms(object):
    ###########################################################Tutorial#############################################################
     def linear_reg_tut():
@@ -202,6 +203,11 @@ class regression_algorithms(object):
                 Real_statecol2.write(rmse_LR)
                 Real_statecol2.subheader("R-Squared")
                 Real_statecol2.write(r2_LR)
+                user_input =realstate_prediction.user_input_feature_realstate(Real_statecol1,Real_statecol2)
+                filename = 'savedmodels/realstate_linear_reg_model.sav'
+                model=pickle.load(open(filename,'rb'))
+                prediction =model.predict(user_input)
+                Real_statecol2.write(prediction)
             with real_Graphs:
                 real_Graphscol1,real_Graphscol2=real_Graphs.columns((6,6))
                 label=df['house price of unit area']
@@ -284,6 +290,7 @@ class regression_algorithms(object):
                 Fishcol2.write(rmse_LR)
                 Fishcol2.subheader("R-Squared")
                 Fishcol2.write(r2_LR)
+
             with Fish_Graphs:
                 FishGraphscol1,FishGraphscol2=Fish_Graphs.columns((6,6))
                 label=df['Weight']
@@ -366,6 +373,11 @@ class regression_algorithms(object):
                 Real_statecol2.write(rmse_LR)
                 Real_statecol2.subheader("R-Squared")
                 Real_statecol2.write(r2_LR)
+                user_input =realstate_prediction.user_input_feature_realstate(Real_statecol1,Real_statecol2)
+                filename = 'savedmodels/realstate_lasso_reg_model.sav'
+                model=pickle.load(open(filename,'rb'))
+                prediction =model.predict(user_input)
+                Real_statecol2.write(prediction)
             with real_Graphs:
                 real_Graphscol1,real_Graphscol2=real_Graphs.columns((6,6))
                 label=df['house price of unit area']
@@ -446,6 +458,8 @@ class regression_algorithms(object):
                 Fishcol2.write(rmse_LR)
                 Fishcol2.subheader("R-Squared")
                 Fishcol2.write(r2_LR)
+                Fishcol1.subheader("Pridict fish weight")
+               
             with Fish_Graphs:
                 FishGraphscol1,FishGraphscol2=Fish_Graphs.columns((6,6))
                 label=df['Weight']
@@ -537,7 +551,11 @@ class regression_algorithms(object):
                 Real_statecol2.write(rmse_LR)
                 Real_statecol2.subheader("R-Squared")
                 Real_statecol2.write(r2_LR)
-        
+                user_input =realstate_prediction.user_input_feature_realstate(Real_statecol1,Real_statecol2)
+                filename = 'savedmodels/realstate_gradient_bossting_model.sav'
+                model=pickle.load(open(filename,'rb'))
+                prediction =model.predict(user_input)
+                Real_statecol2.write(prediction)
             with real_Graphs:
                 real_Graphscol1,real_Graphscol2=real_Graphs.columns((6,6))
                 label=df['house price of unit area']

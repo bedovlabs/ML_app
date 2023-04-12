@@ -470,7 +470,7 @@ class supervised_naive(object):
                 
 
             # saves the animation in our desktonp
-            #anim.save('growingCoil.mp4', writer = 'ffmpeg', fps = 30)
+            # anim.save('growingCoil.mp4', writer = 'ffmpeg', fps = 30)
             # Enable interactive plot
 
 
