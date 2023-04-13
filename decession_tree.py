@@ -292,7 +292,7 @@ class Supervised_decession_tree(object):
             cat_dog_classifier=image_dectree()
             x,y,df=cat_dog_classifier.load_data()
             datadir='media/animals/' 
-            for i in ['Cats','Dogs']:
+            for i in ['cats','dogs']:
                 path=os.path.join(datadir,i)
                 for img,j in zip(os.listdir(path),range(1,4)):
                   if i=='Cats':
