@@ -224,7 +224,7 @@ class regression_algorithms(object):
                 fig.suptitle('Label Distribution')
                 # Show the figure
                 real_Graphscol1.pyplot(fig)
-                
+               
                 df.hist(xlabelsize=5)
                 plt.show()
                 real_Graphscol2.header("Features Histogram")
@@ -290,7 +290,13 @@ class regression_algorithms(object):
                 Fishcol2.write(rmse_LR)
                 Fishcol2.subheader("R-Squared")
                 Fishcol2.write(r2_LR)
-
+                Fishcol1.subheader("Pridict fish weight")
+                user_input=fish_weight_prediction.user_input_feature_fish(Fishcol1,Fishcol2)
+                filename = 'savedmodels/fish_weight_linear_reg_model.sav'
+                model=pickle.load(open(filename,'rb'))
+                prediction =model.predict(user_input)
+                Fishcol2.subheader("predicted weight ")
+                Fishcol2.write(prediction)
             with Fish_Graphs:
                 FishGraphscol1,FishGraphscol2=Fish_Graphs.columns((6,6))
                 label=df['Weight']
@@ -312,9 +318,6 @@ class regression_algorithms(object):
                 plt.show()
                 FishGraphscol2.header("Features Histogram")
                 FishGraphscol2.pyplot(plt)
-                #fig, ax = plt.subplots()
-                #ax.hist(x, bins=20)
-            # tabirisGraphs.pyplot(fig)
                 df.plot()
                 plt.show()
                 FishGraphscol2.header("Features plot")
@@ -459,6 +462,12 @@ class regression_algorithms(object):
                 Fishcol2.subheader("R-Squared")
                 Fishcol2.write(r2_LR)
                 Fishcol1.subheader("Pridict fish weight")
+                user_input=fish_weight_prediction.user_input_feature_fish(Fishcol1,Fishcol2)
+                filename = 'savedmodels/fish_weight_lasso_reg_model.sav'
+                model=pickle.load(open(filename,'rb'))
+                prediction =model.predict(user_input)
+                Fishcol2.subheader("predicted weight ")
+                Fishcol2.write(prediction)
                
             with Fish_Graphs:
                 FishGraphscol1,FishGraphscol2=Fish_Graphs.columns((6,6))
@@ -636,6 +645,14 @@ class regression_algorithms(object):
                 Fishcol2.write(rmse_LR)
                 Fishcol2.subheader("R-Squared")
                 Fishcol2.write(r2_LR)
+                Fishcol1.subheader("Pridict fish weight")
+                user_input=fish_weight_prediction.user_input_feature_fish(Fishcol1,Fishcol2)
+                st.write(user_input.info())
+                filename = 'savedmodels/fish_weight_gradient_bossting_model.sav'
+                model=pickle.load(open(filename,'rb'))
+                prediction =model.predict(user_input)
+                Fishcol2.subheader("predicted weight ")
+                Fishcol2.write(prediction)
             with Fish_Graphs:
                 FishGraphscol1,FishGraphscol2=Fish_Graphs.columns((6,6))
                 label=df['Weight']
@@ -685,6 +702,7 @@ class regression_algorithms(object):
                 plt.ylabel("Weight")
                 FishGraphscol2.header("feature Scatter Matrix")
                 FishGraphscol2.pyplot(plt)
+                
 
                 
                                 

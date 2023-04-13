@@ -44,6 +44,7 @@ class svm_heart(object):
         loaded_model = pickle.load(open('savedmodels/svmirr_model.sav', 'rb'))
         user_prediction=loaded_model.predict(user_input)
         return user_prediction
+   
     def user_input_smart_irr(self,irr_col1,irr_col2):
        
         options=['Garden Flowers' , 'Maize' , 'Paddy,Paddy','Garden Flowers'  ,'Wheat','Groundnuts','Potato','Groundnuts','Sugarcane']
