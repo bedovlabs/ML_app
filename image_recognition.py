@@ -63,7 +63,7 @@ class svm_image(object):
 
 class image_dectree(object):
     def load_data(self):
-        Categories=['Cats','Dogs']
+        Categories=['cats','dogs']
         flat_data_arr=[] #input array
         target_arr=[] #output array
         targets=[]
@@ -71,7 +71,7 @@ class image_dectree(object):
         #path which contains all the categories of images
         for i in Categories:
             #print(f'loading... category : {i}')
-            path=os.path.join(datadir,i)
+            path=os.path.join   (datadir,i)
             for img in os.listdir(path):
                 img_array=imread(os.path.join(path,img))
                 img_resized=resize(img_array,(150,150,3))
